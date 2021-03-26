@@ -1,0 +1,177 @@
+<div class="container">
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Crear Lista</button>
+    <div class="row" *ngFor="let tareas of listaTareas">
+        <div class="card col-sm" style="width: 18rem; margin-top: 10px;">
+            <div class="card-body">
+              <h1>{{tareas.nombre}}</h1>
+              <h6 class="card-subtitle mb-2 text-muted">{{tareas.descripcion}}</h6>
+              <hr>
+              <h3>Lista de tareas</h3>
+              <div *ngFor="let tarea of tareas.lista">
+                  <hr>
+                    <h4>{{tarea.nombre}}</h4>
+                    <p>{{tarea.descripcion}}</p>
+                    <button style="margin-right: 10px;" (click)="verTarea(tarea.id)" type="button" class="btn btn-primary" data-toggle="modal" data-target="#verTarea">Ver tarea</button>
+                    <button  (click)="obtenerIdTarea(tarea.id)" type="button" class="btn btn-primary" data-toggle="modal" data-target="#agregarColaborador">Agregar Colaborador</button>
+                 <hr>
+              </div>
+              <div>
+                <button (click)="obtenerIdTarea(tareas.id)" type="button" class="btn btn-default" data-toggle="modal" data-target="#modalTarea">Crear Tarea</button>
+              </div>
+            </div>
+          </div>
+    </div>
+</div>
+
+<!-- Modal  Crear Lista-->
+<div id="myModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Crear Lista</h4>
+      </div>
+      <div class="modal-body">
+        <form   class="form-contactos">
+            <div class="form-group">
+              <input [(ngModel)]="nombre" name="nombre" required type="text" class="form-control" id="txtNombreLista"  placeholder="Nombre Lista">
+            </div>
+            <div class="form-group">
+              <input [(ngModel)]="descripcion" name="descripcion" type="text" class="form-control" id="txtDescripcionLista" placeholder="Descripcion">
+            </div>
+            
+            <div class="form-contactos__boton">
+                <button (click)="crearLista()" type="submit" class="btn btn-default" data-dismiss="modal">Agregar</button>
+            </div>
+            
+          </form>
+      </div>
+      
+    </div>
+
+  </div>
+</div>
+
+<!-- Modal Cear Tarea-->
+<div id="modalTarea" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+  
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Crear Tarea</h4>
+        </div>
+        <div class="modal-body">
+          <form   class="form-contactos">
+              <div class="form-group">
+                <input [(ngModel)]="nombreTarea" name="nombreTarea" required type="text" class="form-control" id="txtNombreTarea"  placeholder="Nombre">
+              </div>
+              <div class="form-group">
+                <input [(ngModel)]="descripcionTarea" name="descripcionTarea" type="text" class="form-control" id="txtDescripcionTarea" placeholder="Descripcion">
+              </div>
+              
+              <div >
+                  <button (click)="crearTarea()" type="submit" class="btn btn-default" data-dismiss="modal">Agregar</button>
+              </div>
+              
+            </form>
+
+        </div>
+        
+      </div>
+
+    </div>
+  </div>
+
+<!--Modal ver tarea-->
+  <div id="verTarea" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+  
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 class="modal-title">Tarea</h2>
+        </div>
+        <div class="modal-body">
+          <form class="form-contactos container">
+            <div class="row">
+             <label class="col-6" for="">Nombre:</label> <p class="col-6" >{{nombreTareaModal}}</p>
+             <label class="col-6" for="">Descripcion:</label> <p class="col-6">{{descripcionTarea}}</p>
+            </div>
+            
+              <hr>
+              <h3>Colaboradores</h3>
+            <div *ngFor="let colaborador of colaboradoresModal">
+              <div class="container">
+                <div class="row">
+                  <div class="col-4">
+                    <div class="row">
+                      <label class="col-6" for="">Nombre:</label>
+                      <p class="col-6">{{colaborador.nombre}}</p>
+                    </div>
+                  </div>
+                  <div class="col-8">
+                    <div class="col-6">
+                      <div class="row">
+                        <label class="col-6" for="">Correo:</label>
+                        <p class="col-6">{{colaborador.correo}}</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <hr>
+            <h4>Comentarios</h4>
+            <div *ngFor="let comentario of comentariosModal">
+              <p>{{comentario.comentario}}</p>
+           </div>
+          </form>
+
+          <div class="form-group">
+            <input [(ngModel)]="comentario" name="comentario" required type="text" class="form-control" id="txtComentario"  placeholder="Comentario">
+          </div>
+          
+          <div >
+              <button (click)="agregarComentario()" type="button" class="btn btn-default" >Agregar Comentario</button>
+          </div>
+        </div>
+        
+      </div>
+  
+    </div>
+  </div>
+
+  <!--Modal Agregar colaborador-->
+  <div id="agregarColaborador" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+  
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Agregar Colaborador</h4>
+        </div>
+        <div class="modal-body">
+            <form   class="form-contactos">
+                <div class="form-group">
+                  <input [(ngModel)]="nombreColaborador" name="nombreColaborador" required type="text" class="form-control" id="txtNombreColaborador"  placeholder="Nombre">
+                </div>
+                <div class="form-group">
+                  <input [(ngModel)]="correoColaborador" name="correoColaborador" type="text" class="form-control" id="txtCorreoColaborador" placeholder="Correo">
+                </div>
+                
+                <div class="form-contactos__boton">
+                    <button (click)="agregarColaborador()" type="submit" class="btn btn-default" data-dismiss="modal">Agregar</button>
+                </div>
+                
+              </form>
+        </div>
+        
+      </div>
+  
+    </div>
+  </div>
+
+    
